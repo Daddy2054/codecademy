@@ -1,17 +1,17 @@
 const team = {
     _players: [
       {
-        firstname: 'David',
+        firstName: 'David',
         lastName: 'Baxes',
         age: 11
       },
       {
-        firstname: 'John',
+        firstName: 'John',
         lastName: 'Baxtin',
         age: 12
       },
       {
-        firstname: 'Martin',
+        firstName: 'Martin',
         lastName: 'Golod',
         age: 13
       }
@@ -36,5 +36,34 @@ const team = {
 
         },
     ],
+    get games() {
+      return this._games;
+    },
+    get players() {
+      return this._players;
+    },
+    addPlayer(firstName, lastName, age) {
+      let newPlayer = {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+      };
+      this.players.push(newPlayer);  /// ?????? underscore or not
+    },
+    addGame(opp, tPts, oppPts)  {
+      let newGame = {
+        opponent: opp,
+        teamPoints: tPts,
+        opponentPoints: oppPts,
+    };
+      this.games.push(newGame);
+  },
 
   };
+  team.addPlayer('Steph', 'Curry', 28);
+  team.addPlayer('Lisa', 'Leslie', 44);
+  console.log(team.players);
+  team.addGame('Fresno', 23,32);
+  team.addGame('MyLove', 14,35);  
+  team.addGame('Phils', 33,22);
+  console.log(team.games);
