@@ -1,6 +1,6 @@
 function capitalizeASingleWord(word) {
   
-    if (!word.match(' ')) {
+    if (word.match(' ') != null) {
       
       return null;
     }
