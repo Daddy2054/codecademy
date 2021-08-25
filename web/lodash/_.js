@@ -60,14 +60,26 @@ const _ = {
         let dropNumber = array.findIndex( (element, index) => !predicate(element, index, array));
         droppedArray = this.drop(array, dropNumber);
         return droppedArray;
-
-//        func1(element, index) { return !predicate(element, index, array)}
     },
-
+    chunk( array, size) {
+        let newarray = [];
+        if (size == undefined) { size = 1;}
+        let i = size;
+        let index ;        
+        for (index = 0; index < array.length; index++) {
+            if (i >= 1) { 
+                i--; 
+            }else {
+                newarray.push( array.slice( index - size , index ));
+                i = size; 
+                index--;       
+            }
+        }
+        newarray.push( array.slice( index - size + i));
+        return newarray;
+    },
 };
 
-//2 - Returns an object with all keys and values inverted - Failed: 
-_.invert({originalKey: "originalValue"}) ;
-//returned undefined instead of originalKey.
+
 // Do not write or modify code below this line.
 module.exports = _;
