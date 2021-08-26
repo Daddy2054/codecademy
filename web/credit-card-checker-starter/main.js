@@ -24,11 +24,63 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
+// check if valid (copied from wikipedia:luhn alg.)
+function validateCred ( array) {
+    let ccLength = array.length;
+    let sum = array[ccLength - 1];
+    let parity = (ccLength -1 ) % 2 ;
+    for (let index = 0; index < ccLength - 1; index++) {
+        let element = array[index];
+        if (index % 2 != parity) {
+            element = element * 2 ;
+        }
+        if (element > 9) {
+            element = element - 9;
+        }
+        sum = sum + element;
+    }
+    return (sum % 10) == 0;
+}
 
+function findInvalidCards(array) {
+    let invalidArray = [];
+    for (let index = 0; index < array.length; index++) {
+        if (!validateCred(array[index])) {
+            invalidArray.push(array[index]);
+        }
+    }
+    return invalidArray;
+}
+function idInvalidCardCompanies(array) {
+    const allCompanies = [[3, 'Amex (American Express)'],
+        [4, 'Visa'],
+        [5,	'Mastercard'],
+        [6,	'Discover']];
+    let badCompanies = [];
+    for (let index = 0; index < array.length; index++) {
+        let company = '';
+        switch (array[index][0]) {
+            case 3:
+                company =  'Amex (American Express)';       
+                break;
+            case 4:
+                company =  'Visa';       
+                break;
+            case 5:
+                company =  'Mastercard';       
+                break;
+            case 6:
+                company =  'Discover';       
+                break;                
+            default:
+                company =  'Company not found';       
+                break;
+        }
+        if (badCompanies.indexOf(company) < 0) {
+            badCompanies.push(company);
+        }
+    }
+    return badCompanies;
+}
 
-
-
-
-
-
-
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
