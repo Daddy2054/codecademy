@@ -3,7 +3,7 @@
 using namespace std; 
 // here is it
 
-
+ 
 
 void display_board(string board);
 string place_marker(string board, char marker, int position);
