@@ -29,6 +29,30 @@ def pick_color():
     while not(color == 'X' or color == 'O'):
         color = input('enter X or O: ')[0].upper()
     return color
+def validate_move():
+    column = 10
+    print("Enter column's number :")
+    while (column > 0 and column < 8):
+        column = input('enter 1-7 only: ')[0]
+        if column.isalpha():
+            column = 0
+            print('Wrong input!')
+            continue 
+    return column
+
+def check_row(board, column):
+    i = 0
+    for  i in range(0,6):
+        if board[i][column -1] == ' _ ':
+            continue
+        else:
+            break
+    return i    # row
+
+def player_move(board):
+    column = validate_move()
+    row = check_row(board, column)
+    # place coin
 
 #display_board(board)
 #print(pick_color())
@@ -45,5 +69,5 @@ while True:
         if p1_turn:
             p1_turn = False
             print('Player 1 move:')
-            
+
 
