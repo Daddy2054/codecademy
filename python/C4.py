@@ -42,19 +42,37 @@ def validate_move():
 
 def check_row(board, column):
     i = 0
-    for  i in range(0,6):
+    for  i in range(0,6): #coin is dropping...
         if board[i][column -1] == ' _ ':
             continue
         else:
-            break
+            break # until it stops.
     return i    # row
 
-def player_move(board):
+def player_move(board, color):
     column = validate_move()
     row = check_row(board, column)
-    # place coin
+    board[row][column] = color     # place coin
+    display_board(board)
 
-#display_board(board)
+def you_win(board, color): #check if it is win move
+    pass
+    # 1.check rows 
+    # 2. checks colums
+    # 3. check diagonals 6 + 6
+    for  i in range(0,6): #check rows...
+        if board[i].find(color*4) == -1:
+            continue    #check next row
+
+    for i in range(0,8): #check columns
+        board_column = []    
+        for y in range(0,6):
+            board_column.append(board[y][i])
+        if board_column.find(color*4) == -1:
+            continue    #check next column
+    
+    #  check diagonals 6 + 6
+
 #print(pick_color())
 while True:
     intro()
@@ -69,5 +87,6 @@ while True:
         if p1_turn:
             p1_turn = False
             print('Player 1 move:')
+            player_move( board, p1_color)
 
 
