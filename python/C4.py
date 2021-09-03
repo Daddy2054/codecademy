@@ -60,18 +60,37 @@ def you_win(board, color): #check if it is win move
     # 1.check rows 
     # 2. checks colums
     # 3. check diagonals 6 + 6
+    win_color = [color,color,color,color]
+    board_rows = [[board[0][0]+ board[0][1]+ board[0][2]+
+                  board[0][3]+ board[0][4]+ board[0][5]+ board[0][6]],
+                [board[1][0]+ board[1][1]+ board[1][2]+
+                  board[1][3]+ board[1][4]+ board[1][5]+ board[1][6]],
+                [board[0][0], board[0][1], board[0][2],
+                  board[0][3], board[0][4], board[0][5], board[0][6]],
+                [board[0][0], board[0][1], board[0][2],
+                  board[0][3], board[0][4], board[0][5], board[0][6]],
+                [board[0][0], board[0][1], board[0][2],
+                  board[0][3], board[0][4], board[0][5], board[0][6]],
+                [board[0][0], board[0][1], board[0][2],
+                  board[0][3], board[0][4], board[0][5], board[0][6]],
+                
+                ]
     for  i in range(0,6): #check rows...
-        if board[i].find(color*4) == -1:
+        if board[i].find(win_color) == -1:
             continue    #check next row
 
     for i in range(0,8): #check columns
         board_column = []    
         for y in range(0,6):
             board_column.append(board[y][i])
-        if board_column.find(color*4) == -1:
+        if board_column.find(win_color) == -1:
             continue    #check next column
     
     #  check diagonals 6 + 6
+    board_diag = [board[3][0], 
+                board[2][1], 
+                board[1][2],
+                board[0][3]]  
 
 #print(pick_color())
 while True:
