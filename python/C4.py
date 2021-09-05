@@ -22,7 +22,8 @@ def display_board(board):
             board[i][5] + '|' +
             board[i][6] + '|' )
 def intro():
-    print('Welcome in Connect Four game!\n')        
+    print('Welcome in Connect Four game!\n')    
+
 def pick_color():
     color = 'Y'
     print('Player 1 starts. Please, pick a color.')
@@ -56,7 +57,6 @@ def player_move(board, color):
     display_board(board)
 
 def you_win(board, color): #check if it is win move
-    pass
     # 1.check rows 
     # 2. checks colums
     # 3. check diagonals 6 + 6
@@ -68,8 +68,8 @@ def you_win(board, color): #check if it is win move
                          board[i][2]+ board[i][3]+ 
                          board[i][4]+ board[i][5]])
     for i in range(0,6):                      
-        if board_rows[i].find(win_color) == -1:
-            continue    #check next row
+        if board_rows[i].find(win_color) >= 0:
+            return True
 
     board_columns = []    
     for i in range(0,8): #check columns
@@ -78,9 +78,9 @@ def you_win(board, color): #check if it is win move
                          board[3][i]+ board[4][i]+
                          board[5][i]+ board[6][i]])
     for y in range(0,8):
-        if board_columns.find(win_color) == -1:
-            continue    #check next column
-    
+        if board_columns.find(win_color) >= 0:
+            return True
+
     #  check diagonals 6 + 6
     board_diags = []
     board_diags.append([board[3][0]+ 
@@ -106,22 +106,61 @@ def you_win(board, color): #check if it is win move
                 board[0][6]])   #diag 4
     board_diags.append([board[5][2]+ 
                 board[4][3]+
+                board[3][4]+
+                board[2][5]+
+                board[1][6]])   # diag 5
+    board_diags.append([board[5][3]+ 
+                board[4][4]+
+                board[3][5]+
+                board[2][6]])   # diag 6
+    board_diags.append([board[3][6]+ 
+                board[2][5]+
+                board[1][4]+
+                board[0][3]]) # diag 1
+    board_diags.append([board[4][6]+ 
+                board[3][5]+
+                board[2][4]+
+                board[1][3]+
+                board[0][2]])   # diag 2
+    board_diags.append([board[5][6]+ 
+                board[4][5]+
+                board[3][4]+
+                board[2][3]+
+                board[1][2]+
+                board[0][1]])   #diag3
+    board_diags.append([board[5][5]+ 
+                board[4][4]+
+                board[3][3]+
+                board[2][2]+
+                board[1][1]+
+                board[0][0]])   #diag 4
+    board_diags.append([board[5][4]+ 
+                board[4][3]+
                 board[3][2]+
                 board[2][1]+
                 board[1][0]])   # diag 5
     board_diags.append([board[5][3]+ 
-                board[4][1]+
+                board[4][2]+
                 board[3][1]+
-                board[2][2]+
-                board[1][3]+
-                board[0][4]])
-    board_diags.append([board[4][0]+ 
-                board[2][1]+
-                board[1][2]+
-                board[0][3]]) # diag 1
-               
-                
-                
+                board[2][0]])   # diag 6
+    if board_diags.find(win_color) >= 0:
+        return True               
+    return False                
+
+def full_check(board):
+    str1=board[0][0]+board[0][1]+board[0][2]+board[0][3]+board[0][4]+board[0][5]+board[0][6]
+    if str1.find(' _ ') == -1:
+        return True
+    return False    
+
+def again(): #replay again
+    replay = '1'
+    print('One more time?')
+    while not(replay == 'Y' or replay == 'N'):
+        replay = input('enter Y or N: ')[0].upper()
+    if replay == 'Y':
+        return True
+    return False    
 
 #print(pick_color())
 while True:
@@ -138,5 +177,20 @@ while True:
             p1_turn = False
             print('Player 1 move:')
             player_move( board, p1_color)
+            if you_win(board, p1_color):
+                print('Player 1 WON!')
+                break
+        else:
+            p1_turn = True
+            print('Player 2 move:')
+            player_move( board, p2_color)
+            if you_win(board, p2_color):
+                print('Player 2 WON!')
+                break
+        if full_check(board):
+            print("It's tie!") 
+            in_game = False
 
+    if not again():
+        break
 
