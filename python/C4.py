@@ -1,10 +1,4 @@
 
-board2 = [[' 1',' 2',' 3',' 4',' 5',' 6',' 7'],
-        [' 1',' 2',' 3',' 4',' 5',' 6',' 7'],
-        [' 1',' 2',' 3',' 4',' 5',' 6',' 7'],
-        [' 1',' 2',' 3',' 4',' 5',' 6',' 7'],
-        [' 1',' 2',' 3',' 4',' 5',' 6',' 7'],
-        [' 1',' 2',' 3',' 4',' 5',' 6',' 7']]
 
 board = []
 for i in range(0,6):
@@ -29,20 +23,23 @@ def pick_color():
     print('Player 1 starts. Please, pick a color.')
     while not(color == 'X' or color == 'O'):
         color = input('enter X or O: ')[0].upper()
-    return color
+    return ' ' + color + ' '
+
 def validate_move():
     column = 10
     print("Enter column's number :")
-    while (column > 0 and column < 8):
-        column = input('enter 1-7 only: ')[0]
-        if column.isalpha():
+    while (column < 1 or column > 7):
+        column1 = input('enter 1-7 only: ')[0]
+        if column1.isdigit():
+            column = int(column1)
+        else:    
             column = 0
             print('Wrong input!')
-            continue 
+            #continue 
     return column
 
 def check_row(board, column):
-    i = 0
+    #i = 0
     for  i in range(0,6): #coin is dropping...
         if board[i][column -1] == ' _ ':
             continue
@@ -53,7 +50,7 @@ def check_row(board, column):
 def player_move(board, color):
     column = validate_move()
     row = check_row(board, column)
-    board[row][column] = color     # place coin
+    board[row][column - 1] = color     # place coin
     display_board(board)
 
 def you_win(board, color): #check if it is win move
@@ -61,7 +58,7 @@ def you_win(board, color): #check if it is win move
     # 2. checks colums
     # 3. check diagonals 6 + 6
     win_color = [color,color,color,color]
-    
+    win_color2 = color+color+color+color
     board_rows = []
     for  i in range(0,6): #check rows...
         board_rows.append([board[i][0]+ board[i][1]+
@@ -166,15 +163,16 @@ def again(): #replay again
 while True:
     intro()
     p1_color = pick_color()
-    if p1_color == 'X':
-        p2_color = 'O'
+    if p1_color == ' X ':
+        p2_color = ' O '
     else:     
-        p2_color = 'X'
+        p2_color = ' X '
     p1_turn = True    
     in_game = True
     while in_game:
         if p1_turn:
             p1_turn = False
+            display_board(board)
             print('Player 1 move:')
             player_move( board, p1_color)
             if you_win(board, p1_color):
@@ -182,6 +180,7 @@ while True:
                 break
         else:
             p1_turn = True
+            display_board(board)
             print('Player 2 move:')
             player_move( board, p2_color)
             if you_win(board, p2_color):
@@ -192,5 +191,6 @@ while True:
             in_game = False
 
     if not again():
+        print('Thank You for playing.')
         break
 
