@@ -39,17 +39,26 @@ def validate_move():
     return column
 
 def check_row(board, column):
-    #i = 0
     for  i in range(0,6): #coin is dropping...
         if board[i][column -1] == ' _ ':
             continue
         else:
-            break # until it stops.
+            if i == 0:
+                print('Wrong input! The column {column} is full.'.format(column=column))
+                #column = validate_move()
+                #continue
+                return -1
+            else:
+                i -= 1
+                break # until it stops.
     return i    # row
 
 def player_move(board, color):
-    column = validate_move()
-    row = check_row(board, column)
+    row = -1
+    while row < 0:
+        column = validate_move()
+        row = check_row(board, column)
+    
     board[row][column - 1] = color     # place coin
     display_board(board)
 
@@ -57,25 +66,27 @@ def you_win(board, color): #check if it is win move
     # 1.check rows 
     # 2. checks colums
     # 3. check diagonals 6 + 6
-    win_color = [color,color,color,color]
-    win_color2 = color+color+color+color
+    win_color = color+color+color+color
+    win_color = win_color.replace(' ','')
     board_rows = []
     for  i in range(0,6): #check rows...
         board_rows.append([board[i][0]+ board[i][1]+
                          board[i][2]+ board[i][3]+ 
-                         board[i][4]+ board[i][5]])
-    for i in range(0,6):                      
-        if board_rows[i].find(win_color) >= 0:
+                         board[i][4]+ board[i][5]+
+                         board[i][6]])
+    for i in range(0,6):  
+        str1 = ''.join(board_rows[i]).replace(' ','')                    
+        if str1.find(win_color) >= 0:
             return True
 
     board_columns = []    
-    for i in range(0,8): #check columns
-        board_columns.append([board[0][i]+ board[0][i]+
-                         board[1][i]+ board[2][i]+ 
-                         board[3][i]+ board[4][i]+
-                         board[5][i]+ board[6][i]])
-    for y in range(0,8):
-        if board_columns.find(win_color) >= 0:
+    for i in range(0,7): #check columns
+        board_columns.append([board[0][i]+ board[1][i]+
+                         board[2][i]+ board[3][i]+ 
+                         board[4][i]+ board[5][i]])
+    for y in range(0,7):
+        str1 = ''.join(board_columns[i]).replace(' ','')                    
+        if str1.find(win_color) >= 0:
             return True
 
     #  check diagonals 6 + 6
@@ -140,8 +151,11 @@ def you_win(board, color): #check if it is win move
                 board[4][2]+
                 board[3][1]+
                 board[2][0]])   # diag 6
-    if board_diags.find(win_color) >= 0:
-        return True               
+
+    for y in range(0,13):
+        str1 = ''.join(board_diags[i]).replace(' ','')                    
+        if str1.find(win_color) >= 0:
+            return True               
     return False                
 
 def full_check(board):
