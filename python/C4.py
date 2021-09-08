@@ -1,9 +1,7 @@
 
 
 board = []
-for i in range(0,6):
-    board.insert(i, [' _ ',' _ ',' _ ',' _ ',' _ ',' _ ',' _ '])
-
+   
 def display_board(board):
     print('\n'*100)
     print('  1   2   3   4   5   6   7')
@@ -16,7 +14,9 @@ def display_board(board):
             board[i][5] + '|' +
             board[i][6] + '|' )
 def intro():
-    print('Welcome in Connect Four game!\n')    
+    print('Welcome to Connect Four game!\n')    
+    for i in range(0,6):
+        board.insert(i, [' _ ',' _ ',' _ ',' _ ',' _ ',' _ ',' _ '])
 
 def pick_color():
     color = 'Y'
@@ -45,8 +45,6 @@ def check_row(board, column):
         else:
             if i == 0:
                 print('Wrong input! The column {column} is full.'.format(column=column))
-                #column = validate_move()
-                #continue
                 return -1
             else:
                 i -= 1
@@ -152,8 +150,8 @@ def you_win(board, color): #check if it is win move
                 board[3][1]+
                 board[2][0]])   # diag 6
 
-    for y in range(0,13):
-        str1 = ''.join(board_diags[i]).replace(' ','')                    
+    for y in range(0,12):
+        str1 = ''.join(board_diags[y]).replace(' ','')                    
         if str1.find(win_color) >= 0:
             return True               
     return False                
